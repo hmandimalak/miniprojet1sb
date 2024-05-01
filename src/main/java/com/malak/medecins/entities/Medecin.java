@@ -2,13 +2,17 @@ package com.malak.medecins.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+
 @Entity
 public class Medecin {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -16,7 +20,8 @@ public class Medecin {
 	private String nomMedecin;
 	private String specialite;
 	private Date dateDiplome;
-	
+	@ManyToOne
+	private Faculte faculte;
 	
 	public Medecin() {
 		super();
@@ -59,6 +64,14 @@ public class Medecin {
 	public String toString() {
 		return "Medecin [idMedecin=" + idMedecin + ", nomMedecin=" + nomMedecin + ", specialite=" + specialite
 				+ ", dateDiplome=" + dateDiplome + "]";
+	}
+
+	public Faculte getFaculte() {
+		return faculte;
+	}
+
+	public void setFaculte(Faculte faculte) {
+		this.faculte = faculte;
 	}
 	
 	
