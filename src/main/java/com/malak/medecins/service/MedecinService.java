@@ -22,4 +22,5 @@ public interface MedecinService {
 	List<Medecin> findByFaculteId(Long id);
 	List<Medecin> findByOrderByNomMedecinAsc();
 	List<Medecin> trierMedecinsSpecialite();
+	List<Faculte> getAllFacultes();
 }

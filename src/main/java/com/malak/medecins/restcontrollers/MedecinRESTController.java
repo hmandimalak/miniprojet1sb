@@ -1,4 +1,4 @@
-package com.malak.Medecins.restcontrollers;
+package com.malak.medecins.restcontrollers;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class MedecinRESTController {
 	{
 	medecinService.deleteMedecinById(id);
 	}
-	@RequestMapping(value="/prodscat/{idCat}",method = RequestMethod.GET)
+	@RequestMapping(value="/medsfac/{id}",method = RequestMethod.GET)
 	public List<Medecin> getMedecinsByFacId(@PathVariable("id") Long id) {
 	return medecinService.findByFaculteId(id);
 	}

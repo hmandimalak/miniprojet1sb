@@ -22,11 +22,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						<th>ID</th>
 						<th>Nom Medecin</th>
 						<th>Specialite</th>
+						<th>Date diplome</th>
+						<th>Faculte</th>
 					</tr>
 					<tr th:each="m:${medecins.content}">
 						<td th:text="${m.idMedecin}"></td>
 						<td th:text="${m.nomMedecin}"></td>
 						<td th:text="${m.specialite}"></td>
+						<td th:text="${m.dateDiplome}"></td>
+						<td th:if="${!#strings.isEmpty(m.faculte)}" th:text="${m.faculte.nomFac}"></td>
+						<td th:if="${#strings.isEmpty(m.faculte)}" th:text="${'Pas de faculte'}"></td>
+						<td><a class="btn btn-success" th:href="@{modifierMedecin(id=${m.idMedecin},page=${currentPage},size=${size})}">Editer</a></td>
 						<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerMedecin(id=${m.idMedecin},
 						page=${currentPage},size=${size})}">Supprimer</a></td>
 					</tr>

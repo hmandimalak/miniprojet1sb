@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.malak.medecins.entities.Faculte;
 import com.malak.medecins.entities.Medecin;
+import com.malak.medecins.repos.FaculteRepository;
 import com.malak.medecins.repos.MedecinRepository;
 @Service
 public class MedecinServiceImpl implements MedecinService {
 	@Autowired
 	MedecinRepository medecinRepository;
+	
+	@Autowired
+	FaculteRepository faculteRepository;
 
 
 	@Override
@@ -87,6 +91,11 @@ public class MedecinServiceImpl implements MedecinService {
 	@Override
 	public List<Medecin> trierMedecinsSpecialite() {
 		return medecinRepository.trierProduitsSpecialite();
+	}
+
+	@Override
+	public List<Faculte> getAllFacultes() {
+		return faculteRepository.findAll();
 	}
 
 }
