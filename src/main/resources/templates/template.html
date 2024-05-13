@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity6
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
 <script src="webjars/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -25,7 +25,7 @@ xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity6
 					Medecins
 				</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+					<a sec:authorize="hasAnyAuthority('ADMIN', 'AGENT')"class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
 					<a class="dropdown-item" th:href="@{listeMedecins}">Lister</a>
 				</div>
 			</li>
@@ -37,8 +37,8 @@ xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity6
 					<span sec:authentication="name"></span>
 				</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">login</a>
-					<a class="dropdown-item" href="#">logout</a>
+					<a sec:authorize="!isAuthenticated()" class="dropdown-item" th:href="@{login}">login</a>
+					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">logout</a>
 					<a class="dropdown-item" href="#">Profile</a>
 				</div>
 			</li>

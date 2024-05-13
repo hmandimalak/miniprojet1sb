@@ -2,15 +2,19 @@ package com.malak.medecins.security;
 
 
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,9 +29,13 @@ public class SecurityConfig {
 	.requestMatchers("/showCreate","/saveMedecin").hasAnyAuthority("ADMIN","AGENT")
 	.requestMatchers("/modifierMedecin","/supprimerMedecin").hasAnyAuthority("ADMIN")
 	.requestMatchers("/listeMedecins").hasAnyAuthority("ADMIN","AGENT","USER")
+	.requestMatchers("/login","/webjars/**").permitAll()
 	.anyRequest().authenticated())
 
-	 .formLogin(Customizer.withDefaults())
+	 //.formLogin(Customizer.withDefaults())
+	 .formLogin((formLogin) -> formLogin
+			 .loginPage("/login")
+			 .defaultSuccessUrl("/") )
 	 .httpBasic(Customizer.withDefaults())
 	 
 	 
@@ -37,10 +45,23 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	 public PasswordEncoder passwordEncoder () {
+	 public BCryptPasswordEncoder passwordEncoder () {
 	 return new BCryptPasswordEncoder();
 	 }
-	@Bean
+	
+	
+	/*@Bean
+	public UserDetailsService userDetailsService(DataSource dataSource) {
+	JdbcUserDetailsManager jdbcUserDetailsManager =new JdbcUserDetailsManager(dataSource);
+
+	jdbcUserDetailsManager.setUsersByUsernameQuery("select username ,password, enabled from user where username =?");
+	jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT u.username, r.role as authority " +
+	                                                     "FROM user_role ur, user u , role r " +
+	                                                     "WHERE u.user_id = ur.user_id AND ur.role_id = r.role_id AND u.username = ?");
+
+	 return jdbcUserDetailsManager;
+	 }*/
+	/*@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
 		PasswordEncoder passwordEncoder = passwordEncoder ();
 
@@ -55,6 +76,6 @@ public class SecurityConfig {
 				.build();
 
 		return new InMemoryUserDetailsManager(admin, userMalak, user1);
-	}
+	}*/
 
 }
